@@ -1,7 +1,9 @@
 package com.example.todolist.service;
 
 import com.example.todolist.dto.ToDoItemDTO;
+import com.example.todolist.dto.ToDoItemEditDTO;
 import com.example.todolist.entity.ToDoItemEntity;
+import com.example.todolist.model.ToDoItemEditModel;
 import com.example.todolist.model.ToDoItemModel;
 import com.example.todolist.repository.ToDoRepository;
 import com.example.todolist.util.ToDoItemMapper;
@@ -25,6 +27,16 @@ public class ToDoService {
         ToDoItemEntity toDoItemEntity = mapper.dtoToEntity(toDoItemDTO);
         repository.save(toDoItemEntity);
         return toDoItemDTO;
+    }
+
+
+    public ToDoItemEditDTO edit(ToDoItemEditModel toDoItemEditModel) {
+        ToDoItemEditDTO toDoItemEditDTO = mapper.editModelToEditDto(toDoItemEditModel);
+        ToDoItemEntity entity = repository.findById(toDoItemEditModel.getId()).orElseThrow(() -> new EntityNotFoundException("item  not found"));
+        entity.setCompleted(toDoItemEditDTO.isCompleted());
+        entity.setTitle(toDoItemEditDTO.getTitle());
+        repository.save(entity);
+        return toDoItemEditDTO;
     }
 
     public void delete(Long id){
