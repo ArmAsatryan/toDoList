@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Todo List</title>
+</head>
+<body>
+<h1>Todo List</h1>
+
+<ul>
+  <li th:each="todoItem : ${todoItems}">
+    <span th:text="${todoItem.title}"></span>
+    <span th:if="${todoItem.completed}" style="color: green;">(Completed)</span>
+    <span th:unless="${todoItem.completed}" style="color: red;">(Pending)</span>
+  </li>
+</ul>
+
+<a href="/todo/create">Create New Todo Item</a>
+</body>
+</html>
